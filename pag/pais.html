@@ -11,7 +11,10 @@
     <body>
         <div class="contenido-principal">
             <header>
-                <h1 id="titulo">Cargando...</h1>
+                <div class="cabecera-pais">
+                    <img id="bandera" src="" alt="Bandera del país">
+                    <h1 id="titulo">Cargando...</h1>
+                </div>
                 <nav>
                     <a href="../index.html">Inicio</a>
                     <a href="../pag/paises.html">Países</a>
@@ -22,14 +25,20 @@
             <section class="detalle-pais">
                 <p id="resumen">Cargando información del país...</p>
 
-                <h3>🛩️ Fuerza Aérea</h3>
-                <ul id="aerea"></ul>
+                <div class="bloque fuerza-aerea">
+                    <h3>✈️ Fuerza Aérea</h3>
+                    <ul id="aerea"></ul>
+                </div>
 
-                <h3>🚓 Fuerza Terrestre</h3>
-                <ul id="terrestre"></ul>
+                <div class="bloque fuerza-terrestre">
+                    <h3>🪖 Fuerza Terrestre</h3>
+                    <ul id="terrestre"></ul>
+                </div>
 
-                <h3>🚢 Fuerza Naval</h3>
-                <ul id="naval"></ul>
+                <div class="bloque fuerza-naval">
+                    <h3>🚢 Fuerza Naval</h3>
+                    <ul id="naval"></ul>
+                </div>
             </section>
         </div>
 
