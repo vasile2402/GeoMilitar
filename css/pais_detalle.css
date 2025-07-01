@@ -1,0 +1,28 @@
+.detalle-pais{
+    max-width: 800px;
+    margin: 40px auto;
+    padding: 20px;
+    background-color: #f8f8f8;
+    border-radius: 10px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+.detalle-pais h2{
+    text-align: center;
+    margin-bottom: 30px;
+}
+
+.detalle-pais h3{
+    margin-top: 30px;
+    color: #007bff;
+}
+
+.detalle-pais ul{
+    list-style: none;
+    padding-left: 0;
+}
+
+.detalle-pais li{
+    padding: 5px 0;
+    border-bottom: 1px solid #ddd;
+}
