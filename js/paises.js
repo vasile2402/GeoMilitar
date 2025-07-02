@@ -323,21 +323,48 @@ const datosPaises = {
     }
 };
 
-const params = new URLSearchParams(window.location.search);
-const pais = params.get("pais");
-const datos = datosPaises[pais];
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      entry.target.classList.add('show');
+      observer.unobserve(entry.target);
+    }
+  });
+}, { threshold: 0.1 });
 
-if(datos){
+function observeAnimations() {
+  document.querySelectorAll('[data-animate]').forEach(el => {
+    observer.observe(el);
+  });
+}
+
+window.addEventListener('DOMContentLoaded', () => {
+  observeAnimations();
+  initPage();
+});
+
+function initPage() {
+  const params = new URLSearchParams(window.location.search);
+  const pais = params.get("pais");
+  const datos = datosPaises[pais];
+
+  if (datos) {
     document.getElementById("titulo").textContent = datos.nombre;
     document.getElementById("bandera").src = datos.bandera;
     document.getElementById("bandera").alt = "Bandera de " + datos.nombre;
-    document.getElementById("resumen").textContent = datos.resumen;
+
+    const resumen = document.getElementById("resumen");
+    resumen.textContent = datos.resumen;
+    observeAnimations();
+
     renderSeccionConCategorias("aerea", datos.fuerzaAerea);
     renderSeccionConCategorias("terrestre", datos.fuerzaTerrestre);
     renderSeccionConCategorias("naval", datos.fuerzaNaval);
-} else {
+  } else {
     document.getElementById("titulo").textContent = "País no encontrado";
     document.getElementById("resumen").textContent = "Verifica el nombre del país en la URL.";
+    observeAnimations();
+  }
 }
 
 const modal = document.getElementById("modal");
@@ -345,21 +372,21 @@ const modalBody = document.getElementById("modal-body");
 const cerrarModal = document.getElementById("cerrarModal");
 
 cerrarModal.onclick = () => modal.style.display = "none";
-window.onclick = e => { if(e.target == modal) modal.style.display = "none"; };
+window.onclick = e => { if (e.target == modal) modal.style.display = "none"; };
 
-function mostrarModal(unidad){
-    modalBody.innerHTML = `
-        <h2>${unidad.nombre}</h2>
-        <img src="${unidad.imagen}" alt="${unidad.nombre}" style="width:100%; max-height:300px; object-fit:cover; border-radius:8px; margin:10px 0;">
-        <p>${unidad.descripcion}</p>
-        <ul>
-            <li><strong>Cantidad:</strong> ${unidad.cantidad}</li>
-            <li><strong>Velocidad:</strong> ${unidad.specs.velocidad}</li>
-            <li><strong>Alcance:</strong> ${unidad.specs.alcance}</li>
-            <li><strong>Rol:</strong> ${unidad.specs.rol}</li>
-        </ul>
-    `;
-    modal.style.display = "block";
+function mostrarModal(unidad) {
+  modalBody.innerHTML = `
+    <h2>${unidad.nombre}</h2>
+    <img src="${unidad.imagen}" alt="${unidad.nombre}" style="width:100%; max-height:300px; object-fit:cover; border-radius:8px; margin:10px 0;">
+    <p>${unidad.descripcion}</p>
+    <ul>
+      <li><strong>Cantidad:</strong> ${unidad.cantidad}</li>
+      <li><strong>Velocidad:</strong> ${unidad.specs.velocidad}</li>
+      <li><strong>Alcance:</strong> ${unidad.specs.alcance}</li>
+      <li><strong>Rol:</strong> ${unidad.specs.rol}</li>
+    </ul>
+  `;
+  modal.style.display = "block";
 }
 
 function renderSeccionConCategorias(id, seccion) {
@@ -369,6 +396,7 @@ function renderSeccionConCategorias(id, seccion) {
   Object.entries(seccion).forEach(([subcat, unidades]) => {
     const details = document.createElement("details");
     details.className = "subcategoria";
+    details.setAttribute('data-animate', 'fade-up');
 
     const summary = document.createElement("summary");
     summary.textContent = subcat;
@@ -377,9 +405,11 @@ function renderSeccionConCategorias(id, seccion) {
 
     const grid = document.createElement("div");
     grid.className = "grid-unidades";
+
     unidades.forEach(u => {
       const card = document.createElement("div");
       card.className = "unidad-card";
+      card.setAttribute('data-animate', 'fade-up');
       card.onclick = () => mostrarModal(u);
       card.innerHTML = `
         <img src="${u.imagen}" alt="${u.nombre}">
@@ -388,8 +418,10 @@ function renderSeccionConCategorias(id, seccion) {
       `;
       grid.appendChild(card);
     });
-    details.appendChild(grid);
 
+    details.appendChild(grid);
     cont.appendChild(details);
   });
+
+  observeAnimations();
 }

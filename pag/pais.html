@@ -5,6 +5,7 @@
         <title>Detalles Militares</title>
         <link rel="stylesheet" href="../css/estilos_index.css">
         <link rel="stylesheet" href="../css/pais_detalle.css">
+        <link rel="stylesheet" href="../css/animaciones.css">
         <script defer src="../js/paises.js"></script>
     </head> 
 
@@ -23,19 +24,19 @@
             </header>
 
             <section class="detalle-pais">
-                <p id="resumen">Cargando información del país...</p>
+                <p id="resumen" data-animate="fade-in">Cargando información del país...</p>
 
-                <details class="categoria fuerza-aerea">
+                <details class="categoria fuerza-aerea" data-animate="fade-up">
                     <summary class="categoria-summary">✈️ Fuerza Aérea</summary>
                     <div id="aerea" class="subseccion"></div>
                 </details>
 
-                <details class="categoria fuerza-terrestre">
+                <details class="categoria fuerza-terrestre" data-animate="fade-up">
                     <summary class="categoria-summary">🪖 Fuerza Terrestre</summary>
                     <div id="terrestre" class="subseccion"></div>
                 </details>
 
-                <details class="categoria fuerza-naval">
+                <details class="categoria fuerza-naval" data-animate="fade-up">
                     <summary class="categoria-summary">🚢 Fuerza Naval</summary>
                     <div id="naval" class="subseccion"></div>
                 </details>
