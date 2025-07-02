@@ -311,6 +311,7 @@ function renderTarjetas(id, unidades){
     unidades.forEach(u => {
         const card = document.createElement("div");
         card.className = "unidad-card";
+        card.onclick = () => mostrarModal(u);
         card.innerHTML = `
         <img src="${u.imagen}" alt="${u.nombre}">
         <h4>${u.nombre}</h4>
@@ -324,4 +325,26 @@ function renderTarjetas(id, unidades){
         `;
         contenedor.appendChild(card);
     });
+}
+
+const modal = document.getElementById("modal");
+const modalBody = document.getElementById("modal-body");
+const cerrarModal = document.getElementById("cerrarModal");
+
+cerrarModal.onclick = () => modal.style.display = "none";
+window.onclick = e => { if(e.target == modal) modal.style.display = "none"; };
+
+function mostrarModal(unidad){
+    modalBody.innerHTML = `
+        <h2>${unidad.nombre}</h2>
+        <img src="${unidad.imagen}" alt="${unidad.nombre}" style="width:100%; max-height:300px; object-fit:cover; border-radius:8px; margin:10px 0;">
+        <p>${unidad.descripcion}</p>
+        <ul>
+            <li><strong>Cantidad:</strong> ${unidad.cantidad}</li>
+            <li><strong>Velocidad:</strong> ${unidad.specs.velocidad}</li>
+            <li><strong>Alcance:</strong> ${unidad.specs.alcance}</li>
+            <li><strong>Rol:</strong> ${unidad.specs.rol}</li>
+        </ul>
+    `;
+    modal.style.display = "block";
 }

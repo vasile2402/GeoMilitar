@@ -27,17 +27,17 @@
 
                 <div class="bloque fuerza-aerea">
                     <h3>✈️ Fuerza Aérea</h3>
-                    <ul id="aerea"></ul>
+                    <div id="aerea" class="grid-unidades"></div>
                 </div>
 
                 <div class="bloque fuerza-terrestre">
                     <h3>🪖 Fuerza Terrestre</h3>
-                    <ul id="terrestre"></ul>
+                    <div id="terrestre" class="grid-unidades"></div>
                 </div>
 
                 <div class="bloque fuerza-naval">
                     <h3>🚢 Fuerza Naval</h3>
-                    <ul id="naval"></ul>
+                    <div id="naval" class="grid-unidades"></div>
                 </div>
             </section>
         </div>
@@ -45,5 +45,12 @@
         <footer>
             <p>© 2025 GeoMilitar. Proyecto personal de desarrollo web.</p>
         </footer>
+
+        <div id="modal" class="modal">
+            <div class="modal-content">
+                <span id="cerrarModal" class="cerrar">&times;</span>
+                <div id="modal-body"></div>
+            </div>
+        </div>
     </body>
 </html>
