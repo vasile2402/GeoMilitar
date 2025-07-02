@@ -1,4 +1,4 @@
-.cabecera-pais{
+.cabecera-pais {
     display: flex;
     align-items: center;
     justify-content: center;
@@ -6,14 +6,14 @@
     margin: 30px auto 10px;
 }
 
-.cabecera-pais img{
+.cabecera-pais img {
     width: 60px;
     height: auto;
     border-radius: 5px;
     box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
 }
 
-.detalle-pais{
+.detalle-pais {
     max-width: 1200px;
     margin: 20px auto 40px;
     padding: 20px;
@@ -22,47 +22,116 @@
     box-shadow: 0 2px 10px rgba(0, 0, 0, 0.08);
 }
 
-.detalle-pais p{
+.detalle-pais p {
     font-size: 1rem;
     margin-bottom: 30px;
     text-align: center;
 }
 
-.bloque{
-    padding: 20px;
-    margin-bottom: 30px;
-    border-radius: 8px;
-    background-color: #f9f9f9;
-}
-
-.fuerza-aerea{
-    background-color: #e6f2ff;
-}
-
-.fuerza-terrestre{
-    background-color: #fff5e6;
-}
-
-.fuerza-naval{
-    background-color: #e6ffe6;
-}
-
-.bloque h3{
-    color: #007bff;
-    text-align: center;
+.categoria {
     margin-bottom: 20px;
+    border-radius: 8px;
+    overflow: hidden;
+    background: #f0f0f0;
 }
 
-.grid-unidades {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
-    max-width: 900px;
-    margin: 0 auto;
+.fuerza-aerea    { background-color: #e6f2ff; }
+.fuerza-terrestre { background-color: #fff5e6; }
+.fuerza-naval    { background-color: #e6ffe6; }
+
+.categoria-summary {
+    display: block;
+    padding: 12px 20px;
+    font-size: 1.2rem;
+    font-weight: 600;
+    color: #007bff;
+    cursor: pointer;
+    user-select: none;
+    position: relative;
+    margin: 0;
+    background: rgba(255,255,255,0.6);
+    text-align: center;
+}
+
+.categoria-summary::-webkit-details-marker {
+    display: none;
+}
+
+.categoria-summary::before {
+    content: "+";
+    position: absolute;
+    left: 15px;
+    top: 50%;
+    transform: translateY(-50%);
+}
+
+.categoria[open] .categoria-summary::before {
+    content: "–";
+}
+
+.categoria:not([open]) > .subseccion {
+    display: none;
+}
+
+.categoria[open] > .subseccion {
+    display: block;
+    padding: 0 20px 20px;
+}
+
+.subcategoria {
+    margin: 15px 0;
+    border-radius: 6px;
+    overflow: hidden;
+    background: rgba(255,255,255,0.6);
+}
+
+.subcategoria-summary {
+    display: block;
+    padding: 10px 15px;
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: #007bff;
+    cursor: pointer;
+    user-select: none;
+    position: relative;
+    margin: 0;
+    background: rgba(255,255,255,0.4);
+    text-align: center;
+}
+
+.subcategoria-summary::-webkit-details-marker {
+    display: none;
+}
+
+.subcategoria-summary::before {
+    content: "+";
+    position: absolute;
+    left: 12px;
+    top: 50%;
+    transform: translateY(-50%);
+}
+
+.subcategoria[open] .subcategoria-summary::before {
+    content: "–";
+}
+
+.subcategoria:not([open]) > .grid-unidades {
+    display: none;
+}
+
+.subcategoria[open] > .grid-unidades {
+    display: flex;
+    flex-wrap: wrap;
     gap: 20px;
-    justify-items: center;
+    justify-content: center;
+    padding: 10px 15px;
+    background: #fff;
 }
 
-.unidad-card{
+.unidad-card {
+    flex: 0 1 250px;
+    max-width: 300px;
+    width: 100%;
     background-color: #fff;
     border-radius: 8px;
     padding: 10px;
@@ -74,12 +143,12 @@
     align-items: center;
 }
 
-.unidad-card:hover{
+.unidad-card:hover {
     transform: translateY(-5px);
     box-shadow: 0 4px 15px rgba(0, 0, 0, 0.15);
 }
 
-.unidad-card img{
+.unidad-card img {
     width: 100%;
     max-height: 120px;
     object-fit: cover;
@@ -87,25 +156,25 @@
     margin-bottom: 8px;
 }
 
-.unidad-card h4{
+.unidad-card h4 {
     margin: 5px 0;
     font-size: 1rem;
 }
 
-.unidad-card p{
+.unidad-card p {
     font-size: 0.85rem;
     color: #666;
     text-align: center;
 }
 
-.unidad-card ul{
+.unidad-card ul {
     list-style: none;
     padding-left: 0;
     font-size: 0.85rem;
     color: #333;
 }
 
-.modal{
+.modal {
     display: none;
     position: fixed;
     z-index: 999;
@@ -118,7 +187,7 @@
     background-color: rgba(0, 0, 0, 0.6);
 }
 
-.modal-content{
+.modal-content {
     background-color: #fff;
     margin: auto;
     padding: 20px;
@@ -129,12 +198,12 @@
     animation: fadeIn 0.3s ease;
 }
 
-@keyframes fadeIn{
+@keyframes fadeIn {
     from { opacity: 0; transform: scale(0.9); }
-    to { opacity: 1; transform: scale(1); }
+    to   { opacity: 1; transform: scale(1); }
 }
 
-.cerrar{
+.cerrar {
     color: #aaa;
     float: right;
     font-size: 28px;
