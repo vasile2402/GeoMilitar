@@ -1,3 +1,6 @@
+/* --------------------------------------- */
+/* 1) Estilos generales y layout existente */
+/* --------------------------------------- */
 .cabecera-pais {
     display: flex;
     align-items: center;
@@ -28,16 +31,16 @@
     text-align: center;
 }
 
+/* categoría principal */
 .categoria {
     margin-bottom: 20px;
     border-radius: 8px;
-    overflow: hidden;
     background: #f0f0f0;
+    overflow: hidden;
 }
-
-.fuerza-aerea    { background-color: #e6f2ff; }
+.fuerza-aerea     { background-color: #e6f2ff; }
 .fuerza-terrestre { background-color: #fff5e6; }
-.fuerza-naval    { background-color: #e6ffe6; }
+.fuerza-naval     { background-color: #e6ffe6; }
 
 .categoria-summary {
     display: block;
@@ -52,11 +55,7 @@
     background: rgba(255,255,255,0.6);
     text-align: center;
 }
-
-.categoria-summary::-webkit-details-marker {
-    display: none;
-}
-
+.categoria-summary::-webkit-details-marker { display: none; }
 .categoria-summary::before {
     content: "+";
     position: absolute;
@@ -64,27 +63,20 @@
     top: 50%;
     transform: translateY(-50%);
 }
-
-.categoria[open] .categoria-summary::before {
-    content: "–";
-}
-
-.categoria:not([open]) > .subseccion {
-    display: none;
-}
-
+.categoria[open] .categoria-summary::before { content: "–"; }
+.categoria:not([open]) > .subseccion { display: none; }
 .categoria[open] > .subseccion {
     display: block;
     padding: 0 20px 20px;
 }
 
+/* subcategoría */
 .subcategoria {
     margin: 15px 0;
     border-radius: 6px;
-    overflow: hidden;
     background: rgba(255,255,255,0.6);
+    overflow: hidden; /* cerrado: oculta el grid */
 }
-
 .subcategoria-summary {
     display: block;
     padding: 10px 15px;
@@ -98,11 +90,7 @@
     background: rgba(255,255,255,0.4);
     text-align: center;
 }
-
-.subcategoria-summary::-webkit-details-marker {
-    display: none;
-}
-
+.subcategoria-summary::-webkit-details-marker { display: none; }
 .subcategoria-summary::before {
     content: "+";
     position: absolute;
@@ -110,24 +98,24 @@
     top: 50%;
     transform: translateY(-50%);
 }
+.subcategoria[open] .subcategoria-summary::before { content: "–"; }
 
-.subcategoria[open] .subcategoria-summary::before {
-    content: "–";
+/* --------------------------------------- */
+/* 2) Layout: grid-unidades y tarjetas      */
+/* --------------------------------------- */
+.subcategoria[open] {
+    background: #fff;              /* fondo envolvente */
+    padding: 10px 15px 20px;       /* espacio para tarjetas */
+    overflow: visible;             /* deja ver las tarjetas animadas */
 }
-
-.subcategoria:not([open]) > .grid-unidades {
-    display: none;
-}
-
 .subcategoria[open] > .grid-unidades {
-    display: flex;
+    display: flex;      
     flex-wrap: wrap;
     gap: 20px;
     justify-content: center;
-    padding: 10px 15px;
-    background: #fff;
 }
 
+/* tarjetas */
 .unidad-card {
     flex: 0 1 250px;
     max-width: 300px;
@@ -136,18 +124,16 @@
     border-radius: 8px;
     padding: 10px;
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
-    transition: transform 0.2s ease, box-shadow 0.2s ease;
     cursor: pointer;
     display: flex;
     flex-direction: column;
     align-items: center;
+    transition: box-shadow 0.2s ease;
 }
-
 .unidad-card:hover {
     transform: translateY(-5px);
     box-shadow: 0 4px 15px rgba(0, 0, 0, 0.15);
 }
-
 .unidad-card img {
     width: 100%;
     max-height: 120px;
@@ -155,18 +141,12 @@
     border-radius: 5px;
     margin-bottom: 8px;
 }
-
-.unidad-card h4 {
-    margin: 5px 0;
-    font-size: 1rem;
-}
-
+.unidad-card h4 { margin: 5px 0; font-size: 1rem; }
 .unidad-card p {
     font-size: 0.85rem;
     color: #666;
     text-align: center;
 }
-
 .unidad-card ul {
     list-style: none;
     padding-left: 0;
@@ -174,35 +154,53 @@
     color: #333;
 }
 
+/* --------------------------------------- */
+/* 3) Animación CSS de tarjetas al abrir  */
+/* --------------------------------------- */
+/* 3.1 Estado base: invisibles y pequeñas */
+.unidad-card.animate-gsap {
+  opacity: 0;
+  transform: translateY(20px) scale(0.95);
+}
+
+/* 3.2 Keyframes para revelar */
+@keyframes reveal-card {
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+/* 3.3 Disparamos la animación sólo cuando el detail tiene anim-open */
+details.subcategoria.anim-open .unidad-card.animate-gsap {
+  animation: reveal-card 0.5s ease-out forwards;
+}
+
+/* --------------------------------------- */
+/* 4) Modal                                 */
+/* --------------------------------------- */
 .modal {
     display: none;
     position: fixed;
     z-index: 999;
     padding-top: 60px;
-    left: 0;
-    top: 0;
-    width: 100%;
-    height: 100%;
+    left: 0; top: 0; width: 100%; height: 100%;
     overflow: auto;
     background-color: rgba(0, 0, 0, 0.6);
 }
-
 .modal-content {
     background-color: #fff;
     margin: auto;
     padding: 20px;
-    width: 90%;
-    max-width: 700px;
+    width: 90%; max-width: 700px;
     border-radius: 10px;
     box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
     animation: fadeIn 0.3s ease;
 }
-
 @keyframes fadeIn {
     from { opacity: 0; transform: scale(0.9); }
     to   { opacity: 1; transform: scale(1); }
 }
-
 .cerrar {
     color: #aaa;
     float: right;

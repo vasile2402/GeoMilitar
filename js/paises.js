@@ -323,24 +323,9 @@ const datosPaises = {
     }
 };
 
-const observer = new IntersectionObserver((entries) => {
-  entries.forEach(entry => {
-    if (entry.isIntersecting) {
-      entry.target.classList.add('show');
-      observer.unobserve(entry.target);
-    }
-  });
-}, { threshold: 0.1 });
-
-function observeAnimations() {
-  document.querySelectorAll('[data-animate]').forEach(el => {
-    observer.observe(el);
-  });
-}
-
 window.addEventListener('DOMContentLoaded', () => {
-  observeAnimations();
   initPage();
+  setupAnimations();
 });
 
 function initPage() {
@@ -352,18 +337,18 @@ function initPage() {
     document.getElementById("titulo").textContent = datos.nombre;
     document.getElementById("bandera").src = datos.bandera;
     document.getElementById("bandera").alt = "Bandera de " + datos.nombre;
-
     const resumen = document.getElementById("resumen");
     resumen.textContent = datos.resumen;
-    observeAnimations();
 
     renderSeccionConCategorias("aerea", datos.fuerzaAerea);
     renderSeccionConCategorias("terrestre", datos.fuerzaTerrestre);
     renderSeccionConCategorias("naval", datos.fuerzaNaval);
+
+    setupAnimations();
+    ScrollTrigger.refresh();
   } else {
     document.getElementById("titulo").textContent = "País no encontrado";
     document.getElementById("resumen").textContent = "Verifica el nombre del país en la URL.";
-    observeAnimations();
   }
 }
 
@@ -395,8 +380,7 @@ function renderSeccionConCategorias(id, seccion) {
 
   Object.entries(seccion).forEach(([subcat, unidades]) => {
     const details = document.createElement("details");
-    details.className = "subcategoria";
-    details.setAttribute('data-animate', 'fade-up');
+    details.className = "subcategoria animate-gsap";
 
     const summary = document.createElement("summary");
     summary.textContent = subcat;
@@ -408,8 +392,7 @@ function renderSeccionConCategorias(id, seccion) {
 
     unidades.forEach(u => {
       const card = document.createElement("div");
-      card.className = "unidad-card";
-      card.setAttribute('data-animate', 'fade-up');
+      card.className = "unidad-card animate-gsap unidad-animate";
       card.onclick = () => mostrarModal(u);
       card.innerHTML = `
         <img src="${u.imagen}" alt="${u.nombre}">
@@ -422,6 +405,73 @@ function renderSeccionConCategorias(id, seccion) {
     details.appendChild(grid);
     cont.appendChild(details);
   });
+}
 
-  observeAnimations();
+gsap.registerPlugin(ScrollTrigger);
+
+function setupAnimations() {
+  animarIniciales();
+  animarDetalleAlAbrir();
+}
+
+function animarIniciales() {
+  const elementos = document.querySelectorAll('.animate-gsap:not(.unidad-animate)');
+
+  elementos.forEach((el, i) => {
+    const bounds = el.getBoundingClientRect();
+    const enPantalla = bounds.top < window.innerHeight && bounds.bottom > 0;
+
+    if (enPantalla) {
+      gsap.fromTo(el,
+        { opacity: 0, y: 50 },
+        {
+          opacity: 1,
+          y: 0,
+          duration: 0.6,
+          delay: i * 0.05,
+          ease: 'power2.out'
+        }
+      );
+    }
+  });
+}
+
+function animarDetalleAlAbrir() {
+  document.querySelectorAll("details.subcategoria").forEach(detail => {
+    detail.addEventListener("toggle", () => {
+      const grid = detail.querySelector(".grid-unidades");
+      const cards = grid.querySelectorAll(".unidad-card");
+
+      if (detail.open) {
+        // 1) Oculta el grid hasta que GSAP prepare todo
+        grid.style.visibility = "hidden";
+
+        // 2) En el siguiente frame, aplica estado inicial y lanza animación
+        requestAnimationFrame(() => {
+          gsap.set(cards, {
+            autoAlpha: 0,    // opacity:0 + visibility:hidden
+            scale:     0.95, // ligeramente reducidos
+            overwrite: true
+          });
+
+          // 3) Revela el grid y anima todas las tarjetas a la vez
+          grid.style.visibility = "visible";
+          gsap.to(cards, {
+            autoAlpha: 1,
+            scale:     1,
+            duration:  0.5,
+            ease:      "power2.out"
+          });
+        });
+
+      } else {
+        // 4) Al cerrar, limpias los estilos inline para el próximo open
+        cards.forEach(card => {
+          card.style.opacity    = "";
+          card.style.visibility = "";
+          card.style.transform  = "";
+        });
+      }
+    });
+  });
 }

@@ -5,7 +5,9 @@
         <title>Detalles Militares</title>
         <link rel="stylesheet" href="../css/estilos_index.css">
         <link rel="stylesheet" href="../css/pais_detalle.css">
-        <link rel="stylesheet" href="../css/animaciones.css">
+
+        <script defer src="https://unpkg.com/gsap@3/dist/gsap.min.js"></script>
+        <script defer src="https://unpkg.com/gsap@3/dist/ScrollTrigger.min.js"></script>
         <script defer src="../js/paises.js"></script>
     </head> 
 
@@ -24,19 +26,19 @@
             </header>
 
             <section class="detalle-pais">
-                <p id="resumen" data-animate="fade-in">Cargando información del país...</p>
+                <p id="resumen" class="animate-gsap">Cargando información del país...</p>
 
-                <details class="categoria fuerza-aerea" data-animate="fade-up">
+                <details class="categoria fuerza-aerea animate-gsap">
                     <summary class="categoria-summary">✈️ Fuerza Aérea</summary>
                     <div id="aerea" class="subseccion"></div>
                 </details>
 
-                <details class="categoria fuerza-terrestre" data-animate="fade-up">
+                <details class="categoria fuerza-terrestre animate-gsap">
                     <summary class="categoria-summary">🪖 Fuerza Terrestre</summary>
                     <div id="terrestre" class="subseccion"></div>
                 </details>
 
-                <details class="categoria fuerza-naval" data-animate="fade-up">
+                <details class="categoria fuerza-naval animate-gsap">
                     <summary class="categoria-summary">🚢 Fuerza Naval</summary>
                     <div id="naval" class="subseccion"></div>
                 </details>
