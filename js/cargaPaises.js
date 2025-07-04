@@ -21,7 +21,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
   paises.forEach(pais => {
     const tarjeta = document.createElement("div");
-    tarjeta.className = "tarjeta-pais";
+    tarjeta.className = "tarjeta-pais animate-pais";
     tarjeta.innerHTML = `
       <div class="bandera-contenedor">
         <img src="${pais.bandera}" alt="Bandera ${pais.nombre}">
@@ -30,5 +30,12 @@ document.addEventListener("DOMContentLoaded", () => {
       <a href="pais.html?pais=${pais.id}">Ver fuerza militar</a>
     `;
     contenedor.appendChild(tarjeta);
+  });
+
+  const tarjetas = document.querySelectorAll(".animate-pais");
+  tarjetas.forEach((tarjeta, i) => {
+    setTimeout(() => {
+      tarjeta.classList.add("visible");
+    }, 100 * i);
   });
 });
