@@ -1,6 +1,3 @@
-/* --------------------------------------- */
-/* 1) Estilos generales y layout existente */
-/* --------------------------------------- */
 .cabecera-pais {
     display: flex;
     align-items: center;
@@ -31,7 +28,6 @@
     text-align: center;
 }
 
-/* categoría principal */
 .categoria {
     margin-bottom: 20px;
     border-radius: 8px;
@@ -70,12 +66,11 @@
     padding: 0 20px 20px;
 }
 
-/* subcategoría */
 .subcategoria {
     margin: 15px 0;
     border-radius: 6px;
     background: rgba(255,255,255,0.6);
-    overflow: hidden; /* cerrado: oculta el grid */
+    overflow: hidden;
 }
 .subcategoria-summary {
     display: block;
@@ -100,13 +95,10 @@
 }
 .subcategoria[open] .subcategoria-summary::before { content: "–"; }
 
-/* --------------------------------------- */
-/* 2) Layout: grid-unidades y tarjetas      */
-/* --------------------------------------- */
 .subcategoria[open] {
-    background: #fff;              /* fondo envolvente */
-    padding: 10px 15px 20px;       /* espacio para tarjetas */
-    overflow: visible;             /* deja ver las tarjetas animadas */
+    background: #fff;
+    padding: 10px 15px 40px;
+    overflow: visible;
 }
 .subcategoria[open] > .grid-unidades {
     display: flex;      
@@ -115,7 +107,6 @@
     justify-content: center;
 }
 
-/* tarjetas */
 .unidad-card {
     flex: 0 1 250px;
     max-width: 300px;
@@ -154,16 +145,11 @@
     color: #333;
 }
 
-/* --------------------------------------- */
-/* 3) Animación CSS de tarjetas al abrir  */
-/* --------------------------------------- */
-/* 3.1 Estado base: invisibles y pequeñas */
 .unidad-card.animate-gsap {
   opacity: 0;
   transform: translateY(20px) scale(0.95);
 }
 
-/* 3.2 Keyframes para revelar */
 @keyframes reveal-card {
   to {
     opacity: 1;
@@ -171,14 +157,10 @@
   }
 }
 
-/* 3.3 Disparamos la animación sólo cuando el detail tiene anim-open */
 details.subcategoria.anim-open .unidad-card.animate-gsap {
   animation: reveal-card 0.5s ease-out forwards;
 }
 
-/* --------------------------------------- */
-/* 4) Modal                                 */
-/* --------------------------------------- */
 .modal {
     display: none;
     position: fixed;
