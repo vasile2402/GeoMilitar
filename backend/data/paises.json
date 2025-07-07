@@ -1,0 +1,20 @@
+[
+    {
+        "id": "usa",
+        "nombre": "Estados Unidos",
+        "bandera": "/GeoMilitar/frontend/img/Banderas/usa.png",
+        "resumen": "Estados Unidos posee una de las fuerzas militares más avanzadas del mundo."
+    },
+    {
+        "id": "rusia",
+        "nombre": "Rusia",
+        "bandera": "/GeoMilitar/frontend/img/Banderas/rusia.png",
+        "resumen": "Rusia cuenta con una fuerza militar potente, especialmente en tierra y armamento nuclear."
+    },
+    {
+        "id": "china",
+        "nombre": "China",
+        "bandera": "/GeoMilitar/frontend/img/Banderas/china.png",
+        "resumen": "China está expandiendo rápidamente su poder militar con foco naval y tecnológico."
+    }
+]
